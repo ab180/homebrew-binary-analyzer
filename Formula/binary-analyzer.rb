@@ -3,12 +3,10 @@ class BinaryAnalyzer < Formula
   homepage "https://www.airbridge.io/"
 
   version = "0.0.0"
-  sha_macos_aarch64 = "cf648a2cfb3c0acbad935f6808894f91505d32a3f84f305e7061971d3f76b5e6"
-  sha_macos_x64 = "fd468e487ce0ce211530a38f6fafad7d695bbbb9d55ad5b9c565ce0aa8bcfcfe"
+  sha_macos_aarch64 = "ce66d782b51c53ce1e2976d9044a24dd64321486fd1d8bb447ab61b048b80416"
+  sha_macos_x64 = "141fd7b732fde5093ace6130083202a1d21bb14057d7c53f5be7d737fa215df8"
   # sha_linux_aarch64 = ""
-  sha_linux_x64 = "ee6f8a10b100c3755d7fb8933abe90dbedfaccf8ba3b0dbfeddd75d92845a056"
-
-  depends_on "zlib"
+  sha_linux_x64 = "d0c87cd7d74bec3315141f00431face73c672bbd67cfa31231c7b898f18b3924"
 
   on_macos do
     if Hardware::CPU.arm?
@@ -21,7 +19,6 @@ class BinaryAnalyzer < Formula
   end
 
   on_linux do
-    depends_on "patchelf" => :build
     # if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
     #   url "https://sdk-internal.airbridge.io/binary-analyzer/#{version}/linux-aarch64/binary-analyzer.tar.gz"
     #   sha256 sha_linux_aarch64
@@ -38,18 +35,6 @@ class BinaryAnalyzer < Formula
   end
 
   def install
-    libexec.install "binary-analyzer.jar"
-    libexec.install "binary-analyzer"
-
-    if OS.linux?
-      # Set RPATH for dynamic libz
-      rpath = Formula["zlib"].opt_lib
-      system "patchelf", "--set-rpath", rpath, "#{libexec}/binary-analyzer"
-    end
-
-    (bin / "binary-analyzer").write <<~EOS
-      #!/bin/bash
-      exec "#{libexec}/binary-analyzer" "$@"
-    EOS
+    bin.install "binary-analyzer"
   end
 end
