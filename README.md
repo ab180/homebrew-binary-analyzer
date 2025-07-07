@@ -2,15 +2,18 @@
 
 ## How do I install these formulae?
 
-`brew install ab180/binary-analyzer/<formula>`
+### Install
 
-Or `brew tap ab180/binary-analyzer` and then `brew install <formula>`.
+```shell
+brew tap ab180/binary-analyzer
+brew install binary-analyzer
+```
 
-Or, in a `brew bundle` `Brewfile`:
+### Uninstall
 
-```ruby
-tap "ab180/binary-analyzer"
-brew "<formula>"
+```shell
+brew uninstall binary-analyzer
+brew untap ab180/binary-analyzer
 ```
 
 ## Documentation
